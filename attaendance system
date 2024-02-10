@@ -1,0 +1,120 @@
+Project Structure:
+
+AttendanceManagementSystem/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   ├── model/
+│   │   │   │   ├── Student.java
+│   │   │   │   └── Attendance.java
+│   │   │   ├── dao/
+│   │   │   │   └── AttendanceDAO.java
+│   │   │   ├── service/
+│   │   │   │   └── AttendanceService.java
+│   │   │   └── ui/
+│   │   │       └── AttendanceUI.java
+│   │   └── resources/
+│   └── test/
+└── pom.xml
+
+Database Design:
+
+Table: students
+| Column Name | Data Type   |
+|-------------|-------------|
+| id          | INT         |
+| name        | VARCHAR(50) |
+
+Table: attendance
+| Column Name | Data Type   |
+|-------------|-------------|
+| id          | INT         |
+| student_id  | INT         |
+| date        | DATE        |
+| status      | VARCHAR(10) |
+
+<dependencies>
+    <!-- Add JDBC dependency here -->
+</dependencies>
+
+
+package model;
+
+public class Student {
+    private int id;
+    private String name;
+
+    public Student(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    // Getters and setters
+}
+package model;
+
+public class Student {
+    private int id;
+    private String name;
+
+    public Student(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    // Getters and setters
+}
+package dao;
+
+import model.Attendance;
+import java.util.Date;
+import java.util.List;
+
+public interface AttendanceDAO {
+    void markAttendance(int studentId, Date date, String status);
+    List<Attendance> getAttendanceByDate(Date date);
+    List<Attendance> getAttendanceByStudent(int studentId);
+}
+
+package service;
+
+import dao.AttendanceDAO;
+import model.Attendance;
+import java.util.Date;
+import java.util.List;
+
+public class AttendanceService {
+    private AttendanceDAO attendanceDAO;
+
+    public AttendanceService(AttendanceDAO attendanceDAO) {
+        this.attendanceDAO = attendanceDAO;
+    }
+
+    public void markAttendance(int studentId, Date date, String status) {
+        attendanceDAO.markAttendance(studentId, date, status);
+    }
+
+    public List<Attendance> getAttendanceByDate(Date date) {
+        return attendanceDAO.getAttendanceByDate(date);
+    }
+
+    public List<Attendance> getAttendanceByStudent(int studentId) {
+        return attendanceDAO.getAttendanceByStudent(studentId);
+    }
+}
+package ui;
+
+import service.AttendanceService;
+import java.util.Scanner;
+
+public class AttendanceUI {
+    private AttendanceService attendanceService;
+    private Scanner scanner;
+
+    public AttendanceUI(AttendanceService attendanceService) {
+        this.attendanceService = attendanceService;
+        this.scanner = new Scanner(System.in);
+    }
+
+    // Implement UI methods here
+}
